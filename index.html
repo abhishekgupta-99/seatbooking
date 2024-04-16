@@ -1,15 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Seat Booking App</title>
-  <link rel="stylesheet" href="index.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seat Booking</title>
+<style>
+    .seat {
+        width: 40px;
+        height: 40px;
+        background-color: #ccc;
+        margin: 5px;
+        display: inline-block;
+        border: 1px solid #aaa;
+        cursor: pointer;
+    }
+    .booked {
+        background-color: #ff6347; /* Red color for booked seats */
+        cursor: not-allowed;
+    }
+</style>
 </head>
 <body>
-  <h1>Seat Booking App</h1>
-  <div id="seats-container"></div>
-  <button id="book-btn">Book Seat</button>
-  <script src="script.js"></script>
+    <h2>Seat Booking</h2>
+    <div id="seats"></div>
+    <script>
+        // Array to store seat status (true for booked, false for available)
+        let seats = Array(20).fill(false); // Assuming 20 seats
+
+        // Function to render seats
+        function renderSeats() {
+            const seatsDiv = document.getElementById('seats');
+            seatsDiv.innerHTML = ''; // Clear previous seats
+            for (let i = 0; i < seats.length; i++) {
+                const seat = document.createElement('div');
+                seat.classList.add('seat');
+                if (seats[i]) {
+                    seat.classList.add('booked');
+                }
+                seat.textContent = i + 1; // Seat numbers start from 1
+                seat.addEventListener('click', () => bookSeat(i));
+                seatsDiv.appendChild(seat);
+            }
+        }
+
+        // Function to book a seat
+        function bookSeat(seatIndex) {
+            if (!seats[seatIndex]) {
+                seats[seatIndex] = true; // Mark the seat as booked
+                renderSeats(); // Re-render seats
+            } else {
+                alert('This seat is already booked!');
+            }
+        }
+
+        // Initial rendering of seats
+        renderSeats();
+    </script>
 </body>
 </html>
